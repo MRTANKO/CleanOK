@@ -54,7 +54,7 @@ class SerevicesSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class CategorysSerializer(serializers.ModelSerializer):
+class CategoriesSerializer(serializers.ModelSerializer):
     """Сериализация категорий с выводом всех услуг этой категориии."""
 
     items = serializers.SerializerMethodField('_get_services')

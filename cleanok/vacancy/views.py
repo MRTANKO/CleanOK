@@ -6,7 +6,7 @@ from .models import Vacancy
 from .serializers import VacancySerializer
 
 
-class Vacancys(generics.ListAPIView):
+class Vacancies(generics.ListAPIView):
     """API вакансий."""
 
     queryset = Vacancy.objects.all()

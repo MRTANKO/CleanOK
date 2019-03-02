@@ -7,7 +7,7 @@ from .models import Vacancy
 class VacancySerializer(serializers.ModelSerializer):
     """Сериализация вакансии."""
 
-    salary = serializers.SerializerMethodField('salary_ser')
+    salary = serializers.SerializerMethodField('salary_str')
 
     @staticmethod
     def salary_str(obj):

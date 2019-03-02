@@ -4,7 +4,7 @@ from rest_framework import generics
 from rest_framework.permissions import BasePermission, DjangoModelPermissions
 
 from .models import Service, Category, Request
-from .serializers import ServiceSerializer, CategorysSerializer, \
+from .serializers import ServiceSerializer, CategoriesSerializer, \
     CreateRequestSerializer, RequestsSerializer
 
 
@@ -21,7 +21,7 @@ class CategoryAPI(generics.ListAPIView):
 
     queryset = Category.objects.all()
     pagination_class = PageNumberPagination
-    serializer_class = CategorysSerializer
+    serializer_class = CategoriesSerializer
 
 
 class PostOnly(BasePermission):
