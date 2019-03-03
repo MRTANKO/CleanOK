@@ -6,3 +6,8 @@ djangorestframework
 django-ckeditor
 django-cors-headers
 Pillow
+flake8
+flake8-import-order
+flake8-docstrings
+flake8-quotes
+flake8-builtins
