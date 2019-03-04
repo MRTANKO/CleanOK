@@ -1,6 +1,6 @@
 """Модели приложения vacancy."""
-
 from django.db import models
+
 from .validators import validate_salary
 
 

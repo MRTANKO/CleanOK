@@ -1,11 +1,11 @@
 """Представления приложения feedback."""
+from base.postonly import PostOnly
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
 from rest_framework.permissions import DjangoModelPermissions
 
 from .models import Message
 from .serializers import MessageSerializer
-from base.postonly import PostOnly
 
 
 class MessageAPI(generics.ListCreateAPIView):

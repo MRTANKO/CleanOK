@@ -1,7 +1,6 @@
 """Модели приложения services."""
-import re
-
 from django.db import models
+
 from .validators import validate_phone, validate_price
 
 
