@@ -1,20 +1,11 @@
 """Модели приложения vacancy."""
 
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from .validators import validate_salary
 
 
 class Vacancy(models.Model):
     """Модель вакансии."""
-
-    def validate_salary(value):
-        """Проверяет валидность зарплаты."""
-        if value <= 0:
-            raise ValidationError(
-                _('%(value)s некоректная зарплата'),
-                params={'value': value},
-            )
 
     job = models.CharField('Название вакансии', max_length=30)
     salary = models.IntegerField('Зарплата', validators=[validate_salary])
@@ -27,5 +18,5 @@ class Vacancy(models.Model):
     class Meta:
         """Настройки модели."""
 
-        verbose_name = 'Вакансию'
+        verbose_name = 'Вакансия'
         verbose_name_plural = 'Вакансии'

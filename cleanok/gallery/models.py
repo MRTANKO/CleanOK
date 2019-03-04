@@ -14,7 +14,7 @@ class Image(models.Model):
     class Meta:
         """Настройки модели."""
 
-        verbose_name = 'Фотографию'
+        verbose_name = 'Фотография'
         verbose_name_plural = 'Фотографии'
 
 

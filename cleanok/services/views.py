@@ -1,11 +1,12 @@
 """Представления приложения services."""
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
-from rest_framework.permissions import BasePermission, DjangoModelPermissions
+from rest_framework.permissions import DjangoModelPermissions
 
 from .models import Service, Category, Request
 from .serializers import ServiceSerializer, CategoriesSerializer, \
     CreateRequestSerializer, RequestsSerializer
+from base.postonly import PostOnly
 
 
 class Services(generics.ListAPIView):
@@ -24,29 +25,15 @@ class CategoryAPI(generics.ListAPIView):
     serializer_class = CategoriesSerializer
 
 
-class PostOnly(BasePermission):
-    """Класс для настройки доступа."""
-
-    def has_permission(self, request, view):
-        """Обрабатывает разрешение.
-
-        Возвращает 'True', если разрешение предоставлено.
-        Возвращает 'False' в противном случае.
-        """
-        return request.method == 'POST'
-
-
 class RequestAPI(generics.ListCreateAPIView):
     """API запросов."""
 
     queryset = Request.objects.all()
-    serializer_class = CreateRequestSerializer
+    #serializer_class = CreateRequestSerializer
     pagination_class = PageNumberPagination
     permission_classes = (DjangoModelPermissions | PostOnly,)
 
-    def get(self, request, *args, **kwargs):
-        """Обрабатывает get запрос."""
-        groups = Request.objects.all()
-        serializer = RequestsSerializer(groups, many=True)
-        page = self.paginate_queryset(serializer.data)
-        return self.get_paginated_response(page)
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CreateRequestSerializer
+        return RequestsSerializer

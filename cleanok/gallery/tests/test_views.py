@@ -16,8 +16,8 @@ class CertificateListViewTest(TestCase):
         number_of_album = 11
         for album_num in range(number_of_album):
             Group.objects.create(
-                title='title%s' % album_num,
-                cover='cover%s.png' % album_num)
+                title='title_{}'.format(album_num),
+                cover='cover_{}.png'.format(album_num))
             Group.objects.get(id=album_num + 1). \
                 items.set(Image.objects.all())
 
@@ -43,9 +43,9 @@ class CertificateListViewTest(TestCase):
         group_testlist = []
         for album_num in range(number_of_album):
             group_testlist.append({
-                'title': 'title%s' % album_num,
-                'cover': 'http://testserver/change_image_name/cover%s.png'
-                         % album_num,
+                'title': 'title_{}'.format(album_num),
+                'cover': 'http://testserver/change_image_name/cover_{}.png'
+                         ''.format(album_num),
                 'items': image_testlist})
         resp = self.client.get('/galleries/')
         self.assertEqual(resp.status_code, 200)

@@ -24,30 +24,33 @@ class ServiceViewTest(TestCase):
         for services_num in range(number_of_services):
             Service.objects.create(
                 category=Category.objects.get(id=1),
-                name='Service_%s' % services_num,
-                desc='Desc_%s' % services_num,
+                name='Service__{}'.format(services_num),
+                desc='Desc__{}'.format(services_num),
                 price=services_num,
-                note='Note_%s' % services_num,
-                warn='Warn_%s' % services_num
+                note='Note__{}'.format(services_num),
+                warn='Warn__{}'.format(services_num)
             )
         number_of_services = 7
         for services_num in range(number_of_services):
             Service.objects.create(
                 category=Category.objects.get(id=2),
-                name='Service_%s' % services_num,
-                desc='Desc_%s' % services_num,
+                name='Service__{}'.format(services_num),
+                desc='Desc__{}'.format(services_num),
                 price=services_num,
-                note='Note_%s' % services_num,
-                warn='Warn_%s' % services_num
+                note='Note__{}'.format(services_num),
+                warn='Warn__{}'.format(services_num)
             )
-            Service.objects.get(id=services_num + 6).\
-                items.set(Item.objects.all())
+            Service.objects.get(
+                id=services_num + 6
+            ).items.set(
+                Item.objects.all()
+            )
 
     def test_view_url_exists_at_desired_location(self):
         """Тестирование url."""
         resp = self.client.get('/services/')
         self.assertEqual(resp.status_code, 200)
-        resp = self.client.get('/services/categories')
+        resp = self.client.get('/services/categories/')
         self.assertEqual(resp.status_code, 200)
 
     def test_pagination(self):
@@ -60,7 +63,7 @@ class ServiceViewTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTrue(resp.data['count'] == 12)
         self.assertTrue(len(resp.data['results']) == 10)
-        resp = self.client.get('/services/categories')
+        resp = self.client.get('/services/categories/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue(resp.data['count'] == 2)
         self.assertTrue(len(resp.data['results']) == 2)
@@ -73,25 +76,25 @@ class ServiceViewTest(TestCase):
             testlist.append({
                 'id': services_num + 1,
                 'category': {'id': 1, 'name': 'Category_1'},
-                'name': 'Service_%s' % services_num,
-                'desc': 'Desc_%s' % services_num,
+                'name': 'Service__{}'.format(services_num),
+                'desc': 'Desc__{}'.format(services_num),
                 'items': [],
-                'price': 'От %s рублей' % services_num,
-                'note': 'Note_%s' % services_num,
-                'warn': 'Warn_%s' % services_num
+                'price': 'От {} рублей'.format(services_num),
+                'note': 'Note__{}'.format(services_num),
+                'warn': 'Warn__{}'.format(services_num)
             })
         number_of_services = 5
         for services_num in range(0, number_of_services):
             testlist.append({
                 'id': services_num + 6,
                 'category': {'id': 2, 'name': 'Category_2'},
-                'name': 'Service_%s' % services_num,
-                'desc': 'Desc_%s' % services_num,
+                'name': 'Service__{}'.format(services_num),
+                'desc': 'Desc__{}'.format(services_num),
                 'items': [{'id': 1, 'name': 'Item_1'},
                           {'id': 2, 'name': 'Item_2'}],
-                'price': 'От %s рублей' % services_num,
-                'note': 'Note_%s' % services_num,
-                'warn': 'Warn_%s' % services_num
+                'price': 'От {} рублей'.format(services_num),
+                'note': 'Note__{}'.format(services_num),
+                'warn': 'Warn__{}'.format(services_num)
             })
         resp = self.client.get('/services/')
         self.assertEqual(resp.status_code, 200)
@@ -105,15 +108,15 @@ class ServiceViewTest(TestCase):
         for services_num in range(number_of_services):
             testlist[0]['items'].append({
                 'id': services_num + 1,
-                'name': 'Service_%s' % services_num
+                'name': 'Service__{}'.format(services_num)
             })
         number_of_services = 7
         for services_num in range(number_of_services):
             testlist[1]['items'].append({
                 'id': services_num + 6,
-                'name': 'Service_%s' % services_num
+                'name': 'Service__{}'.format(services_num)
             })
-        resp = self.client.get('/services/categories')
+        resp = self.client.get('/services/categories/')
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(json.loads(resp.content)['results'], testlist)
 
@@ -122,20 +125,20 @@ class ServiceViewTest(TestCase):
         testlist = []
         number_of_request = 9
         for request_num in range(number_of_request):
-            self.client.post('/services/leads', {
-                'name': 'User_%s' % request_num,
-                'phone': '892421645%s' % request_num,
+            self.client.post('/services/leads/', {
+                'name': 'User__{}'.format(request_num),
+                'phone': '892421645{}'.format(request_num),
                 'service': 1,
-                'comment': 'Comment_%s' % request_num
+                'comment': 'Comment__{}'.format(request_num)
             })
             testlist.append({
                 'id': request_num + 1,
-                'name': 'User_%s' % request_num,
-                'phone': '892421645%s' % request_num,
-                'service': {'id': 1, 'name': 'Service_0'},
-                'comment': 'Comment_%s' % request_num
+                'name': 'User__{}'.format(request_num),
+                'phone': '892421645{}'.format(request_num),
+                'service': {'id': 1, 'name': 'Service__0'},
+                'comment': 'Comment__{}'.format(request_num)
             })
         self.client.login(username='vlad', password='1234qwer')
-        resp = self.client.get('/services/leads')
+        resp = self.client.get('/services/leads/')
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(json.loads(resp.content)['results'], testlist)

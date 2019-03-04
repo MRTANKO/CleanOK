@@ -14,9 +14,9 @@ class CertificateListViewTest(TestCase):
         number_of_certificate = 11
         for certificate_num in range(number_of_certificate):
             Certificate.objects.create(
-                url='picture%s.png' % certificate_num,
-                title='title%s' % certificate_num,
-                subt='company%s' % certificate_num)
+                url='picture_{}.png'.format(certificate_num),
+                title='title_{}'.format(certificate_num),
+                subt='company_{}'.format(certificate_num))
 
     def test_view_url_exists_at_desired_location(self):
         """Тестирование url."""
@@ -36,10 +36,10 @@ class CertificateListViewTest(TestCase):
         testlist = []
         for certificate_num in range(number_of_certificate):
             testlist.append({
-                'url': 'http://testserver/change_image_name/picture%s.png'
-                       % certificate_num,
-                'title': 'title%s' % certificate_num,
-                'subt': 'company%s' % certificate_num})
+                'url': 'http://testserver/change_image_name/picture_{}.png'
+                       ''.format(certificate_num),
+                'title': 'title_{}'.format(certificate_num),
+                'subt': 'company_{}'.format(certificate_num)})
         resp = self.client.get('/certificates/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue(resp.data['count'] == 11)

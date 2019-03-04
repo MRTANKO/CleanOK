@@ -2,8 +2,7 @@
 import re
 
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from .validators import validate_phone, validate_price
 
 
 class Item(models.Model):
@@ -34,20 +33,12 @@ class Category(models.Model):
     class Meta:
         """Настройки модели."""
 
-        verbose_name = 'Категорию'
+        verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
 
 class Service(models.Model):
     """Модель услуг."""
-
-    def validate_price(value):
-        """Проверяет валидность минимальной цены."""
-        if value <= 0:
-            raise ValidationError(
-                _('%(value)s некоректная цена'),
-                params={'value': value},
-            )
 
     def __str__(self):
         """Перевод названия услуги в строковый тип."""
@@ -73,21 +64,12 @@ class Service(models.Model):
     class Meta:
         """Настройки модели."""
 
-        verbose_name = 'Услугу'
+        verbose_name = 'Услуга'
         verbose_name_plural = 'Услуги'
 
 
 class Request(models.Model):
     """Модель запросов."""
-
-    def validate_phone(value):
-        """Проверяет валидность номера телефона."""
-        if not re.fullmatch(
-                r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$', value):
-            raise ValidationError(
-                _('%(value)s некоректный номер телефона'),
-                params={'value': value},
-            )
 
     name = models.CharField('Имя', max_length=30)
     phone = models.CharField(
@@ -99,5 +81,5 @@ class Request(models.Model):
     class Meta:
         """Настройки модели."""
 
-        verbose_name = 'Запрс'
+        verbose_name = 'Запрос'
         verbose_name_plural = 'Запросы'

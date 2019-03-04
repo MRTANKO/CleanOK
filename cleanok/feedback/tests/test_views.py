@@ -38,9 +38,9 @@ class FeedbackListViewTest(TestCase):
         number_of_feedback = 10
         for feedback_num in range(number_of_feedback):
             self.client.post('/feedbacks/', {
-                'first_name': 'user%s' % feedback_num,
-                'last_name': 'last%s' % feedback_num,
-                'message': 'test%s' % feedback_num})
+                'first_name': 'user_{}'.format(feedback_num),
+                'last_name': 'last_{}'.format(feedback_num),
+                'message': 'test_{}'.format(feedback_num)})
         self.client.login(username='vlad', password='1234qwer')
         resp = self.client.get('/feedbacks/?page=1')
         self.assertEqual(resp.status_code, 200)
@@ -51,15 +51,15 @@ class FeedbackListViewTest(TestCase):
         testlist = []
         for feedback_num in range(number_of_feedback):
             self.client.post('/feedbacks/', {
-                'first_name': 'user%s' % feedback_num,
-                'last_name': 'last%s' % feedback_num,
-                'message': 'test%s' % feedback_num})
+                'first_name': 'user_{}'.format(feedback_num),
+                'last_name': 'last_{}'.format(feedback_num),
+                'message': 'test_{}'.format(feedback_num)})
 
             testlist.append({
                 'id': feedback_num + 1,
-                'first_name': 'user%s' % feedback_num,
-                'last_name': 'last%s' % feedback_num,
-                'message': 'test%s' % feedback_num
+                'first_name': 'user_{}'.format(feedback_num),
+                'last_name': 'last_{}'.format(feedback_num),
+                'message': 'test_{}'.format(feedback_num)
             })
         self.client.login(username='vlad', password='1234qwer')
         resp = self.client.get('/feedbacks/?page=1')

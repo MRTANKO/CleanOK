@@ -16,9 +16,9 @@ class VacancyViewTest(TestCase):
         for news_num in range(number_of_news):
             News.objects.create(
                 date=date(year=2019, month=2, day=1 + news_num),
-                title='Title_%s' % news_num,
-                preview='Prewiew_%s' % news_num,
-                text='Text_%s' % news_num)
+                title='Title__{}'.format(news_num),
+                preview='Prewiew__{}'.format(news_num),
+                text='Text__{}'.format(news_num))
         for number in range(2, 5):
             News.objects.get(id=number).related.set([3 + number])
 
@@ -42,9 +42,9 @@ class VacancyViewTest(TestCase):
             testlist.append({
                 'id': news_num + 1,
                 'date': str(date(year=2019, month=2, day=1 + news_num)),
-                'title': 'Title_%s' % news_num,
-                'preview': 'Prewiew_%s' % news_num,
-                'text': 'Text_%s' % news_num,
+                'title': 'Title__{}'.format(news_num),
+                'preview': 'Prewiew__{}'.format(news_num),
+                'text': 'Text__{}'.format(news_num),
                 'related': []})
         for number in range(2, 5):
             testlist[number - 1]['related'] = [3 + number]

@@ -14,8 +14,8 @@ class RecomendListViewTest(TestCase):
         number_of_recomend = 11
         for recomend_num in range(number_of_recomend):
             Recomend.objects.create(
-                url='url%s.png' % recomend_num,
-                title='title%s' % recomend_num,
+                url='url_{}.png'.format(recomend_num),
+                title='title_{}'.format(recomend_num),
                 year=2001)
 
     def test_view_url_exists_at_desired_location(self):
@@ -32,13 +32,13 @@ class RecomendListViewTest(TestCase):
 
     def test_page_1(self):
         """Тестирование выводимой информации на 1-ой странице."""
-        number_of_promo = 10
+        number_of_recomend = 10
         testlist = []
-        for promo_num in range(number_of_promo):
+        for recomend_num in range(number_of_recomend):
             testlist.append({
-                'url': 'http://testserver/change_image_name/url%s.png'
-                       % promo_num,
-                'title': 'title%s' % promo_num,
+                'url': 'http://testserver/change_image_name/url_{}.png'
+                       ''.format(recomend_num),
+                'title': 'title_{}'.format(recomend_num),
                 'year': '2001 год'})
         resp = self.client.get('/recomends/')
         self.assertEqual(resp.status_code, 200)
